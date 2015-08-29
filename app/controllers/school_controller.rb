@@ -4,6 +4,9 @@ class SchoolController < ApplicationController
 
   def create
     @school = School.new(school_params)
+    @location = Location.new(location_params)
+    @location.save!
+    @school.location_id = @location.id
     if @school.save!
       render json: @school
     else
@@ -23,10 +26,11 @@ class SchoolController < ApplicationController
   def nearby
     @school = School.all
     coordinates = {latitude: params[:latitude].to_f, longitude: params[:longitude].to_f}
-    user_location = Location.new(coordinates)
+    user_location = Location.new({latitude: params[:latitude], longitude: params[:longitude]})
+    
     result = []
     @school.each do |s|
-      result << s if (user_location.distance(s.location)).to_i <= 10
+      result << {school: s, location: s.location} if (s.location.distance(user_location)) <= 10
     end
     render json: result
   end
@@ -52,5 +56,9 @@ class SchoolController < ApplicationController
   private
    def school_params
      params.permit(:name, :email, :phone, :address, :website)
+   end
+
+   def location_params
+     params.permit(:latitude, :longitude)
    end
 end

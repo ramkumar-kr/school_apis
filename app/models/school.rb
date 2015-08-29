@@ -1,5 +1,5 @@
 class School < ActiveRecord::Base
-  has_many :reviews, dependent: :destroy
+  # has_many :reviews, dependent: :destroy
   has_one :location
   validates :name, presence: true
   validates :email, presence: true, format: {with: /\A.+@.+\z/, message: "Invalid Email ID"}
