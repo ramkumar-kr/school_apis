@@ -1,16 +1,27 @@
 class Location < ActiveRecord::Base
-  has_many :schools
+
   attr_reader :latitude, :longitude
 
- def initialize(lat, long)
-   @latitude = lat
-   @longitude = long
- end
+  def initialize(coordinates)
+    @latitude = coordinates[:latitude]
+    @longitude = coordinates[:longitude]
+    super
+  end
 
-  def -(other_location)
-    longitude_sqr = (@longitude - other_location.longitude).abs ** 2
-    latitude_sqr = (@latitude - other_location.latitude).abs ** 2
-    Math.sqrt(longitude_sqr + latitude_sqr)
+  def distance(other_location)
+    km(@latitude, @longitude, other_location[:latitude], other_location[:longitude])
+  end
+
+  def km(lat1, lon1, lat2, lon2)
+    dlon = rad(lon2 - lon1)
+    dlat = rad(lat2 - lat1)
+    a = (Math.sin(dlat/2) ** 2) + Math.cos(rad(lat1)) * Math.cos(rad(lat2)) * (Math.sin(dlon/2) ** 2 )
+    c = 2 * Math.atan2( Math.sqrt(a), Math.sqrt(1-a) ) 
+    d = 6371 * c
+  end
+
+  def rad(degrees)
+    degrees * Math::PI / 180
   end
   
   def to_s

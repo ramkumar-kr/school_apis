@@ -20,6 +20,17 @@ class SchoolController < ApplicationController
     end
   end
 
+  def nearby
+    @school = School.all
+    coordinates = {latitude: params[:latitude].to_f, longitude: params[:longitude].to_f}
+    user_location = Location.new(coordinates)
+    result = []
+    @school.each do |s|
+      result << s if (user_location.distance(s.location)).to_i <= 10
+    end
+    render json: result
+  end
+
   def index
     hash = School.all.each_with_object({}) do |s, h|
       h[s.id] = {school: s, location: s.location}
@@ -42,5 +53,4 @@ class SchoolController < ApplicationController
    def school_params
      params.permit(:name, :email, :phone, :address, :website)
    end
-
 end

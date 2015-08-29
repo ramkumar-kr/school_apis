@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'user/:id(.:format)'=> 'user#show'
 
   patch 'school/update'
+  get 'school/nearby'
   delete 'school/destroy'
   get 'school/'=> 'school#index'
   post 'school/new'
