@@ -1,22 +1,20 @@
 Rails.application.routes.draw do
 
-  get 'school/create'
-
-  get 'school/update'
-
-  get 'school/show'
-
-  get 'school/index'
-
-  get 'school/destroy'
-
-  patch 'user/edit'
+  
+  patch 'user/update'
   delete 'user/destroy'
   get 'user/'=> 'user#index'
   post 'user/login'=>'user#login'
   post 'user/new'
   post 'user/create'
   get 'user/:id(.:format)'=> 'user#show'
+
+  patch 'school/update'
+  delete 'school/destroy'
+  get 'school/'=> 'school#index'
+  post 'school/new'
+  post 'school/create'
+  get 'school/:id(.:format)'=> 'school#show'
 
   root 'user#index'
 
