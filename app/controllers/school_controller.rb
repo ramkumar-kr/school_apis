@@ -44,7 +44,7 @@ class SchoolController < ApplicationController
 
   def show
     @school = School.find(params[:id])
-    render json: @school
+    render json: {school: @school, location: @school.location}
   end
 
   def destroy
