@@ -7,9 +7,7 @@ class UserController < ApplicationController
   end
 
   def create
-    encrypted_password = password(params[:encrypted_password])
     @user = User.new(user_params)
-    @user.encrypted_password = encrypted_password
     if @user.save!
       render json: @user
     else
@@ -30,9 +28,8 @@ class UserController < ApplicationController
   end
 
   def login
-    encrypted_password = password(params[:password])
-    @user = User.find_by(email: params[:email])
-    if @user.encrypted_password == encrypted_password
+    @user = User.find_by(email: params[:email], encrypted_password: params[:encrypted_password])
+    if @user
       render json: @user
     else
       render json: {message: "Login failure"}
@@ -61,8 +58,4 @@ class UserController < ApplicationController
      params.permit(:name, :email, :phone, :address, :number_of_children, :encrypted_password)
    end
 
-   def password(string)
-     crypt = ActiveSupport::MessageEncryptor.new(Rails.application.secrets.secret_key_base)
-     encrypted_data = crypt.encrypt_and_sign(string)
-   end
  end
