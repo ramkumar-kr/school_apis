@@ -11,7 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150829144923) do
+ActiveRecord::Schema.define(version: 20150829155623) do
+
+  create_table "locations", force: :cascade do |t|
+    t.decimal "latitude",  precision: 10, default: 0, null: false
+    t.decimal "longitude", precision: 10, default: 0, null: false
+  end
 
   create_table "schools", force: :cascade do |t|
     t.string  "name"
@@ -25,8 +30,6 @@ ActiveRecord::Schema.define(version: 20150829144923) do
     t.string  "name"
     t.string  "email",                             default: "", null: false
     t.string  "encrypted_password",                default: "", null: false
-    t.integer "number_of_children",                default: 0,  null: false
-    t.string  "address",                           default: "", null: false
     t.decimal "phone",              precision: 10, default: 0,  null: false
   end
 

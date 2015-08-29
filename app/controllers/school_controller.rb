@@ -21,8 +21,10 @@ class SchoolController < ApplicationController
   end
 
   def index
-    @school = School.all
-    render json: @school
+    hash = School.all.each_with_object({}) do |s, h|
+      h[s.id] = {school: s, location: s.location}
+    end
+    render json: hash
   end
 
   def show

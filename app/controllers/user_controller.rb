@@ -8,7 +8,7 @@ class UserController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save!
+    if @user.save
       render json: @user
     else
       render json: {message: "Failure"} 
@@ -55,7 +55,7 @@ class UserController < ApplicationController
 
   private
    def user_params
-     params.permit(:name, :email, :phone, :address, :number_of_children, :encrypted_password)
+     params.permit(:name, :email, :phone, :encrypted_password)
    end
 
  end

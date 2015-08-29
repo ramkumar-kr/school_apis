@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   post 'school/create'
   get 'school/:id(.:format)'=> 'school#show'
 
-  root 'user#index'
+  root 'school#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
