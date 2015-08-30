@@ -37,4 +37,15 @@ class School < ActiveRecord::Base
     end
     sum == 0 ? sum : (sum / reviews.count)
   end
+
+  def review_json
+    data = []
+    reviews.each do |r|
+      hash = {}
+      hash = r.attributes
+      hash[:user_name] = r.user_name
+      data << hash
+    end
+    data
+  end
 end

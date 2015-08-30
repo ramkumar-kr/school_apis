@@ -37,14 +37,14 @@ class SchoolController < ApplicationController
 
   def index
     hash = School.all.each_with_object({}) do |s, h|
-      h[s.id] = {school: s, location: s.location, rating: {overall: s.rating, infrastructure: s.infra_rating, teaching: s.teaching_rating}}
+      h[s.id] = {school: s, location: s.location, rating: {overall: s.rating, infrastructure: s.infra_rating, teaching: s.teaching_rating}, reviews: s.review_json}
     end
     render json: hash
   end
 
   def show
     @school = School.find(params[:id])
-    render json: {school: @school, location: @school.location, rating: {overall: @school.rating, infrastructure: @school.infra_rating, teaching: @school.teaching_rating}, reviews: @school.reviews}
+    render json: {school: @school, location: @school.location, rating: {overall: @school.rating, infrastructure: @school.infra_rating, teaching: @school.teaching_rating}, reviews: @school.review_json}
   end
 
   def destroy

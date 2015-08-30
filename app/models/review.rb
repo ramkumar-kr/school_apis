@@ -37,12 +37,6 @@ class Review < ActiveRecord::Base
     User.find(user_id).name
   end
 
-  def to_hash
-    hash = {}
-    instance_variables.each {|var| hash[var.to_s.delete("@")] = instance_variable_get(var) }
-    hash
-  end
-
   def hash_with_user
     hash = {}
     Review.all.each do |r|
