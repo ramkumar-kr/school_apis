@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150830020417) do
+ActiveRecord::Schema.define(version: 20150830063909) do
 
   create_table "categories", force: :cascade do |t|
     t.string  "name"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 20150830020417) do
     t.decimal "phone",       precision: 10, default: 0,                 null: false
     t.integer "location_id"
     t.string  "image_url"
+    t.string  "schools"
+    t.string  "description"
   end
 
   add_index "schools", ["location_id"], name: "index_schools_on_location_id"

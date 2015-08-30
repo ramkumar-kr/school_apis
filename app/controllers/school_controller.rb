@@ -55,7 +55,7 @@ class SchoolController < ApplicationController
 
   private
    def school_params
-     params.permit(:name, :email, :phone, :address, :website, :image_url)
+     params.permit(:name, :email, :phone, :address, :website, :image_url, :description)
    end
 
    def location_params
