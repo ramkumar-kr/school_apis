@@ -17,6 +17,14 @@ Rails.application.routes.draw do
   post 'school/create'
   get 'school/:id(.:format)'=> 'school#show'
 
+  patch 'review/update'
+  delete 'review/destroy'
+  get 'review/'=> 'review#index'
+  post 'review/new'
+  post 'review/create'
+  get 'review/:id(.:format)'=> 'review#show'
+
+
   root 'school#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

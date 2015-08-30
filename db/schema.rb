@@ -11,12 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150829213519) do
+ActiveRecord::Schema.define(version: 20150830020417) do
+
+  create_table "categories", force: :cascade do |t|
+    t.string  "name"
+    t.decimal "rating",    default: 0.0, null: false
+    t.integer "review_id"
+  end
+
+  add_index "categories", ["review_id"], name: "index_categories_on_review_id"
 
   create_table "locations", force: :cascade do |t|
     t.float "latitude"
     t.float "longitude"
   end
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer "rating",    default: 5,  null: false
+    t.string  "comment",   default: ""
+    t.integer "user_id"
+    t.integer "school_id"
+  end
+
+  add_index "reviews", ["school_id"], name: "index_reviews_on_school_id"
+  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id"
 
   create_table "schools", force: :cascade do |t|
     t.string  "name"
@@ -25,6 +43,7 @@ ActiveRecord::Schema.define(version: 20150829213519) do
     t.string  "address",                    default: "",                null: false
     t.decimal "phone",       precision: 10, default: 0,                 null: false
     t.integer "location_id"
+    t.string  "image_url"
   end
 
   add_index "schools", ["location_id"], name: "index_schools_on_location_id"
