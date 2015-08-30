@@ -32,7 +32,9 @@ class ReviewController < ApplicationController
   def index
     data = []
     Review.all.each do |r|
-      data << {review: r, rating: {overall: r.rating, infrastructure: r.infra_rating, teaching: r.teaching_rating}, categories: r.categories}
+      hash = r.attributes
+      hash[:user_name] = r.user_name
+      data << {review: hash, rating: {overall: r.rating, infrastructure: r.infra_rating, teaching: r.teaching_rating}, categories: r.categories}
     end
 
     render json: {data: data}
@@ -40,7 +42,9 @@ class ReviewController < ApplicationController
 
   def show
     @review = Review.find(params[:id])
-    render json: {review: @review, rating: {overall: @review.rating, infrastructure: @review.infra_rating, teaching: @review.teaching_rating}, categories: @review.categories}
+    hash = @review.attributes
+    hash[:user_name] = @review.user_name
+    render json: {review: hash, rating: {overall: @review.rating, infrastructure: @review.infra_rating, teaching: @review.teaching_rating}, categories: @review.categories, user_name: @review.user_name}
   end
 
   def destroy
