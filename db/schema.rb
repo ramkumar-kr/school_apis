@@ -14,47 +14,46 @@
 ActiveRecord::Schema.define(version: 20150830063909) do
 
   create_table "categories", force: :cascade do |t|
-    t.string  "name"
-    t.decimal "rating",    default: 0.0, null: false
-    t.integer "review_id"
+    t.string  "name",      limit: 255
+    t.decimal "rating",                precision: 10, default: 0, null: false
+    t.integer "review_id", limit: 4
   end
 
-  add_index "categories", ["review_id"], name: "index_categories_on_review_id"
+  add_index "categories", ["review_id"], name: "index_categories_on_review_id", using: :btree
 
   create_table "locations", force: :cascade do |t|
-    t.float "latitude"
-    t.float "longitude"
+    t.decimal "latitude",  precision: 10, default: 0, null: false
+    t.decimal "longitude", precision: 10, default: 0, null: false
   end
 
   create_table "reviews", force: :cascade do |t|
-    t.integer "rating",    default: 5,  null: false
-    t.string  "comment",   default: ""
-    t.integer "user_id"
-    t.integer "school_id"
+    t.string  "comment",   limit: 255, default: ""
+    t.integer "user_id",   limit: 4
+    t.integer "school_id", limit: 4
   end
 
-  add_index "reviews", ["school_id"], name: "index_reviews_on_school_id"
-  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id"
+  add_index "reviews", ["school_id"], name: "index_reviews_on_school_id", using: :btree
+  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id", using: :btree
 
   create_table "schools", force: :cascade do |t|
-    t.string  "name"
-    t.string  "email",                      default: "",                null: false
-    t.string  "website",                    default: "www.example.com", null: false
-    t.string  "address",                    default: "",                null: false
-    t.decimal "phone",       precision: 10, default: 0,                 null: false
-    t.integer "location_id"
-    t.string  "image_url"
-    t.string  "schools"
-    t.string  "description"
+    t.string  "name",        limit: 255
+    t.string  "email",       limit: 255,                default: "",                null: false
+    t.string  "website",     limit: 255,                default: "www.example.com", null: false
+    t.string  "address",     limit: 255,                default: "",                null: false
+    t.decimal "phone",                   precision: 10, default: 0,                 null: false
+    t.integer "location_id", limit: 4
+    t.string  "image_url",   limit: 255
+    t.string  "description", limit: 255
   end
 
-  add_index "schools", ["location_id"], name: "index_schools_on_location_id"
+  add_index "schools", ["location_id"], name: "index_schools_on_location_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string  "name"
-    t.string  "email",                             default: "", null: false
-    t.string  "encrypted_password",                default: "", null: false
-    t.decimal "phone",              precision: 10, default: 0,  null: false
+    t.string  "name",               limit: 255
+    t.string  "email",              limit: 255,                default: "", null: false
+    t.string  "encrypted_password", limit: 255,                default: "", null: false
+    t.decimal "phone",                          precision: 10, default: 0,  null: false
   end
 
+  add_foreign_key "schools", "locations"
 end
